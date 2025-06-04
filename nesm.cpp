@@ -25,7 +25,7 @@
 
 using namespace std;
 
-const int width = 16;
+const int width = 64;
 double delta = 0.2;
 double rho = 0.6;
 vector<vector<int>> grid(width, vector<int>(width, 0));
@@ -43,7 +43,7 @@ void display(vector<vector<int>>& grid) {
         for (int val : row) {
             switch (val) {
                 case -1: cout << RED << "O" << RESET << " "; break;
-                case 0:  cout << GREY << "O" << RESET << " "; break;
+                case 0:  cout << "  "; break;
                 case 1:  cout << GREEN << "O" << RESET << " "; break;
                 default: cout << "? "; break;
             }
@@ -54,10 +54,26 @@ void display(vector<vector<int>>& grid) {
 }
 
 int main(int argc, char* argv[]) { // example usage: ./nesm 100
-    for (int i = 0; i < width; i++) {
+    
+    // // mixed
+    // for (int i = 0; i < width; i++) {
+    //     for (int j = 0; j < width; j++) {
+    //         int idx = init_dist(gen);
+    //         grid[i][j] = init_values[idx];
+    //     }
+    // }
+    
+    // unmixed
+    for (int i = 0; i < width / 2; i++) {
         for (int j = 0; j < width; j++) {
             int idx = init_dist(gen);
-            grid[i][j] = init_values[idx];
+            grid[i][j] = abs(init_values[idx]);
+        }
+    }
+    for (int i = width / 2; i < width; i++) {
+        for (int j = 0; j < width; j++) {
+            int idx = init_dist(gen);
+            grid[i][j] = -1 * abs(init_values[idx]);
         }
     }
 
